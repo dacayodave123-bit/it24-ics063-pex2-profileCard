@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Profile Card</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 350px;
+        }
+
+        .form {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 2px;
+        }
+
+        #createBtn {
+            background-color: #007bff;
+            color: white;
+            width: 100%;
+        }
+
+        .profile-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            display: none;
+        }
+
+        .profile-card h2 {
+            color: #333;
+        }
+
+        .profile-card p {
+            margin: 8px 0;
+        }
+
+        .skills {
+            margin-top: 15px;
+        }
+
+        .skill {
+            display: inline-block;
+            background-color: #007bff;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            margin: 3px;
+        }
+
+        #changeBg {
+            background-color: #28a745;
+            color: white;
+        }
+
+        #addSkill {
+            background-color: #ffc107;
+            color: black;
+        }
+
+        #removeBtn {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <div class="form">
+        <h2>Create Student Profile</h2>
+
+        <input type="text" id="studentName" placeholder="Student Name">
+        <input type="text" id="course" placeholder="Course">
+        <input type="text" id="language" placeholder="Favorite Programming Language">
+
+        <button id="createBtn">Create Profile</button>
+    </div>
+
+    <div class="profile-card" id="profileCard">
+        <h2 id="displayName">Student Name</h2>
+
+        <p>
+            <strong>Course:</strong>
+            <span id="displayCourse"></span>
+        </p>
+
+        <p>
+            <strong>Favorite Language:</strong>
+            <span id="displayLanguage"></span>
+        </p>
+
+        <div class="skills">
+            <strong>Skills:</strong>
+            <div id="skillsList"></div>
+        </div>
+
+        <button id="changeBg">Change Background</button>
+        <button id="addSkill">Add Skill</button>
+        <button id="removeBtn">Remove Profile</button>
+    </div>
+
+</div>
+
+<script>
+    // Get HTML elements using DOM
+    const studentName = document.getElementById("studentName");
+    const course = document.getElementById("course");
+    const language = document.getElementById("language");
+
+    const createBtn = document.getElementById("createBtn");
+
+    const profileCard = document.getElementById("profileCard");
+    const displayName = document.getElementById("displayName");
+    const displayCourse = document.getElementById("displayCourse");
+    const displayLanguage = document.getElementById("displayLanguage");
+    const skillsList = document.getElementById("skillsList");
+
+    const changeBg = document.getElementById("changeBg");
+    const addSkill = document.getElementById("addSkill");
+    const removeBtn = document.getElementById("removeBtn");
+
+    // Create Profile
+    createBtn.addEventListener("click", function () {
+
+        if (
+            studentName.value === "" ||
+            course.value === "" ||
+            language.value === ""
+        ) {
+            alert("Please fill in all fields.");
+            return;
+        }
+
+        // Display information using DOM manipulation
+        displayName.textContent = studentName.value;
+        displayCourse.textContent = course.value;
+        displayLanguage.textContent = language.value;
+
+        // Add the favorite language as the first skill
+        skillsList.innerHTML = "";
+
+        const skill = document.createElement("span");
+        skill.textContent = language.value;
+        skill.classList.add("skill");
+
+        skillsList.appendChild(skill);
+
+        // Show profile card
+        profileCard.style.display = "block";
+    });
+
+    // Change profile card background
+    changeBg.addEventListener("click", function () {
+        const colors = [
+            "#ffffff",
+            "#dff6ff",
+            "#fff3cd",
+            "#e2f0d9",
+            "#f8d7da",
+            "#e8dff5"
+        ];
+
+        const randomColor =
+            colors[Math.floor(Math.random() * colors.length)];
+
+        profileCard.style.backgroundColor = randomColor;
+    });
+
+    // Add a new skill
+    addSkill.addEventListener("click", function () {
+        const newSkill = prompt("Enter a new skill:");
+
+        if (newSkill !== null && newSkill.trim() !== "") {
+
+            const skill = document.createElement("span");
+
+            skill.textContent = newSkill;
+            skill.classList.add("skill");
+
+            skillsList.appendChild(skill);
+        }
+    });
+
+    // Remove profile information
+    removeBtn.addEventListener("click", function () {
+
+        displayName.textContent = "";
+        displayCourse.textContent = "";
+        displayLanguage.textContent = "";
+
+        skillsList.innerHTML = "";
+
+        studentName.value = "";
+        course.value = "";
+        language.value = "";
+
+        profileCard.style.display = "none";
+    });
+</script>
+
+</body>
+  </html>
+  
